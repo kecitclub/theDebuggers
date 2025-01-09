@@ -1,4 +1,4 @@
-import { Leaf, Heart, GraduationCap, Droplets } from 'lucide-react'
+import { Leaf, Heart, GraduationCap, Droplets } from "lucide-react";
 
 export function CategoriesSection() {
   const categories = [
@@ -6,10 +6,10 @@ export function CategoriesSection() {
     { icon: Heart, label: "Health" },
     { icon: GraduationCap, label: "Education" },
     { icon: Droplets, label: "Water" },
-  ]
+  ];
 
   return (
-    <section className="w-full py-12 bg-gray-50">
+    <section className="max-w-7xl mx-auto py-12 bg-gray-50">
       <div className="container px-4 md:px-6">
         <h2 className="text-2xl font-bold text-center mb-8">Categories</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -27,6 +27,5 @@ export function CategoriesSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

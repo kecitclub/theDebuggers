@@ -1,7 +1,7 @@
 export function SiteFooter() {
   return (
-    <footer className="w-full border-t bg-gray-900 text-gray-200">
-      <div className="container px-4 md:px-6 py-12">
+    <footer className=" border-t bg-gray-900 text-gray-200">
+      <div className="max-w-7xl mx-auto container px-4 md:px-6 py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-lg font-semibold mb-4">EK Kadam</h3>
