@@ -4,14 +4,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useRegister from "@/hooks/use-register";
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select"
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function RegisterForm({
   className,
@@ -23,6 +23,7 @@ export default function RegisterForm({
     onSumit,
     password,
     password_confirmation,
+    handlechange,
     role,
   } = useRegister();
   return (
@@ -35,6 +36,7 @@ export default function RegisterForm({
               onChange={onChange}
               id="name"
               type="text"
+              name="name"
               value={name}
               placeholder="John Doe"
               required
@@ -44,6 +46,7 @@ export default function RegisterForm({
             <Label htmlFor="email">Email</Label>
             <Input
               onChange={onChange}
+              name="email"
               id="email"
               type="email"
               value={email}
@@ -57,6 +60,7 @@ export default function RegisterForm({
             <Input
               onChange={onChange}
               id="password"
+              name="password"
               type="password"
               value={password}
               placeholder="*****"
@@ -67,6 +71,7 @@ export default function RegisterForm({
             <Label htmlFor="email">re_Password</Label>
             <Input
               onChange={onChange}
+              name="password_confirmation"
               id="password_confirmation"
               type="password"
               value={password_confirmation}
@@ -76,18 +81,15 @@ export default function RegisterForm({
           </div>
           <div className="grid gap-2">
             <Label htmlFor="email">role</Label>
-            <Select>
+            <Select value={role} onValueChange={handlechange}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select a fruit" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Fruits</SelectLabel>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                  <SelectItem value="user">User</SelectItem>
+                  <SelectItem value="vendor">Vendor</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
