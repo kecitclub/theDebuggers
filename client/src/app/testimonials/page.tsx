@@ -11,7 +11,7 @@ export default function Testimonials() {
       role: "Campaign Creator",
       image: "/img.png",
       quote:
-        "Sajha Setu made it incredibly easy to launch my fundraising campaign. The support from the community was overwhelming!",
+        "EkKadam made it incredibly easy to launch my fundraising campaign. The support from the community was overwhelming!",
       project: "Clean Water Initiative",
     },
     {
@@ -29,7 +29,7 @@ export default function Testimonials() {
       role: "Nonprofit Director",
       image: "/placeholder.svg?height=100&width=100",
       quote:
-        "Sajha Setu has revolutionized how we approach fundraising. It's now an integral part of our outreach strategy.",
+        "EkKadam has revolutionized how we approach fundraising. It's now an integral part of our outreach strategy.",
       project: "Animal Shelter Expansion",
     },
     {
@@ -38,7 +38,7 @@ export default function Testimonials() {
       role: "Beneficiary",
       image: "/placeholder.svg?height=100&width=100",
       quote:
-        "Thanks to the generosity of donors on Sajha Setu, I was able to afford my medical treatment. I'm forever grateful.",
+        "Thanks to the generosity of donors on EkKadam, I was able to afford my medical treatment. I'm forever grateful.",
       project: "Medical Fund",
     },
     {
@@ -47,7 +47,7 @@ export default function Testimonials() {
       role: "Community Leader",
       image: "/placeholder.svg?height=100&width=100",
       quote:
-        "Sajha Setu has brought our community closer together. We've funded several local projects that have made a real difference.",
+        "EkKadam has brought our community closer together. We've funded several local projects that have made a real difference.",
       project: "Community Garden",
     },
     {
@@ -56,7 +56,7 @@ export default function Testimonials() {
       role: "Small Business Owner",
       image: "/placeholder.svg?height=100&width=100",
       quote:
-        "When my business was struggling, the support I received through Sajha Setu was a lifeline. It's more than just a platform; it's a community.",
+        "When my business was struggling, the support I received through EkKadam was a lifeline. It's more than just a platform; it's a community.",
       project: "Local Business Revival",
     },
   ];
@@ -81,7 +81,6 @@ export default function Testimonials() {
           </Button>
         </div>
       </main>
-      <SiteFooter />
     </div>
   );
 }

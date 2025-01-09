@@ -15,8 +15,8 @@ export function SiteHeader() {
           <Link href="/projects" className="text-sm font-medium">
             Projects
           </Link>
-          <Link href="/start" className="text-sm font-medium">
-            Start a Project
+          <Link href="/apply-proposal" className="text-sm font-medium">
+            Apply Proposal
           </Link>
           <Link href="/success-stories" className="text-sm font-medium">
             Success Stories
@@ -29,10 +29,22 @@ export function SiteHeader() {
           </Link>
         </nav>
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" className="hidden md:flex">
-            Sign In
-          </Button>
-          <Button className="bg-green-600 hover:bg-green-700">Join</Button>
+          <Link href={"/auth/login"}>
+            <Button
+              variant="ghost"
+              className="hidden md:flex bg-green-600 hover:bg-green-700 text-white"
+            >
+              Sign In
+            </Button>
+          </Link>
+          <Link href={"/auth/signup"}>
+            <Button
+              variant="ghost"
+              className="hidden md:flex bg-green-600 hover:bg-green-700 text-white"
+            >
+              Sign Up
+            </Button>
+          </Link>
         </div>
       </div>
     </header>
