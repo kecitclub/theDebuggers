@@ -63,8 +63,6 @@ export default function Testimonials() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <SiteHeader />
-
       <main className="flex-grow container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-8 text-center">Testimonials</h1>
         <p className="text-xl text-center mb-12 max-w-2xl mx-auto">
