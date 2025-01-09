@@ -1,3 +1,4 @@
+import Link from 'next/link'
 export function SiteFooter() {
   return (
     <footer className=" border-t bg-gray-900 text-gray-200">
@@ -5,25 +6,28 @@ export function SiteFooter() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-lg font-semibold mb-4">EK Kadam</h3>
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-white-400  hover:text-green-700">
               Creating positive change through community-driven initiatives.
             </p>
           </div>
           <div>
             <h4 className="text-sm font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              <li>About Us</li>
-              <li>How It Works</li>
-              <li>Projects</li>
-              <li>Contact</li>
+              <li className="text-white-600 hover:text-green-700">About Us</li>
+              <li className="text-white-600 hover:text-green-700">How It Works</li>
+              <li className="text-white-600 hover:text-green-700">Projects</li>
+              <li className="text-white-600 hover:text-green-700">Contact</li>
             </ul>
           </div>
           <div>
             <h4 className="text-sm font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-sm">
-              <li>Privacy Policy</li>
-              <li>Terms of Service</li>
-              <li>Cookie Policy</li>
+              <Link href="/privacy-policy" className="text-white-600 hover:underline">
+                Privacy Policy</Link><br></br>
+              <Link href="/terms-and-conditions" className="text-white-600 hover:underline">
+                Terms & Conditions
+              </Link>
+
             </ul>
           </div>
           <div>
