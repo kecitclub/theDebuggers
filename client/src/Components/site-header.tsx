@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 
 export function SiteHeader() {
   return (
-    <header className="border-b">
-      <div className="max-w-7xl mx-auto  container flex h-16 items-center justify-between">
+    <header className="max-w-7xl mx-auto px-2">
+      <div className="flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
           <span className="text-xl font-bold text-green-600">EK Kadam</span>
         </Link>
