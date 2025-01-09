@@ -16,7 +16,7 @@ export function SiteFooter() {
               <li className="text-white-600 hover:text-green-700">About Us</li>
               <li className="text-white-600 hover:text-green-700">How It Works</li>
               <li className="text-white-600 hover:text-green-700">Projects</li>
-              <li className="text-white-600 hover:text-green-700">Contact</li>
+              <Link  href="/contact"  className="text-white-600 hover:text-green-700">Contact</Link>
             </ul>
           </div>
           <div>
