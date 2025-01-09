@@ -1,6 +1,6 @@
 export const clientAdmin = [
   {
-    slug: "client",
+    slug: "user",
   },
   {
     slug: "admin",

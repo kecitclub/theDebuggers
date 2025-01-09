@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { register } from "@/lib/auth";
 export default function useRegister() {
   const router = useRouter();
 
@@ -8,25 +9,20 @@ export default function useRegister() {
     name: "",
     email: "",
     password: "",
-    password_confirmation:'',
-    role:''
+    password_confirmation: "",
+    role: "",
   });
-  
 
-  const {
-    name,
-    email,
-    password,
-    password_confirmation,
-    role
-  } = formData;
- 
-  function isValidPassword(password:any) {
+  const { name, email, password, password_confirmation, role } = formData;
+
+  function isValidPassword(password: any) {
     if (password.length < 8) {
       return false;
-    }if (!/[A-Z]/.test(password)) {
+    }
+    if (!/[A-Z]/.test(password)) {
       return false;
-    }    if (!/[a-z]/.test(password)) {
+    }
+    if (!/[a-z]/.test(password)) {
       return false;
     }
     if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
@@ -41,44 +37,36 @@ export default function useRegister() {
     const { name, value } = event?.target;
     setformData({ ...formData, [name]: value });
   };
+  const handlechange = (e: string) => {
+    setformData({ ...formData, role: e });
+  };
 
-  const onSumit = (event: FormEvent<HTMLFormElement>) => {
+  const onSumit = async (event: FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
-    // console.log(formData);
+
     if (password != password_confirmation) {
       toast.error("Password and re_Password does not match");
     } else if (!isValidPassword(password)) {
-      toast.error("Password must contain Uppercase, lowercase,number and special character")
-    }
-    else {
-      // register({
-      //   first_name,
-      //   last_name,
-      //   address,
-      //   username,
-      //   country_code,
-      //   established,
-      //   country,
-      //   email,
-      //   business_type,
-      //   number,
-      //   business_name,
-      //   password,
-      //   re_password
-      // })
-      //   .unwrap()
-      //   .then(() => {
-      //     toast.success("Plz check email to verify");
-      //     router.push("/auth/login");
-      //   })
-      //   .catch((e) => {
-      //     toast.error(
-      //       e?.data?.email?.[0] ||
-      //         e?.data?.password?.[0] ||
-      //         e?.data?.non_field_errors?.[0] ||
-      //         "An error occurred. Please try again."
-      //     );
-      //   });
+      toast.error(
+        "Password must contain Uppercase, lowercase,number and special character"
+      );
+    } else {
+      try {
+        console.log(formData);
+        const data = await register({
+          name,
+          email,
+          password,
+          role,
+          password_confirmation,
+        });
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("role", data.role);
+        toast.success("Login successful");
+        router.replace(`/dashboard/${data.role}/`);
+      } catch (error: any) {
+        toast.error(error?.response?.data?.message || "An error occurred");
+      }
     }
   };
   return {
@@ -89,6 +77,7 @@ export default function useRegister() {
     onSumit,
     onChange,
     role,
+    handlechange,
     // isLoading,
     // lodingstate,
   };
