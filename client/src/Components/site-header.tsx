@@ -21,6 +21,9 @@ export function SiteHeader() {
           <Link href="/success-stories" className="text-sm font-medium">
             Success Stories
           </Link>
+          <Link href="/testimonials" className="text-sm font-medium">
+            Testimonials
+          </Link>
           <Link href="/contact" className="text-sm font-medium">
             Contact Us
           </Link>
