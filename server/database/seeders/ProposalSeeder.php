@@ -2,77 +2,84 @@
 
 namespace Database\Seeders;
 
-
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Proposal;
-use App\Models\ProposalTimeline;
+use Illuminate\Database\Seeder;
 use App\Models\ProposalDocument;
-use Faker\Factory as Faker;
+use App\Models\ProposalTimeline;
+use Illuminate\Support\Facades\Storage;
 
 class ProposalSeeder extends Seeder
 {
     public function run()
     {
-        $faker = Faker::create();
+        // Ensure storage directories exist
+        Storage::makeDirectory('proposal_thumbnails');
+        Storage::makeDirectory('proposal_documents');
+        $organization = User::role('organization')->first();
+        if (!$organization) {
+            echo "No organization user found. Please create an organization user first.\n";
+            return;
+        }
+        // Create a sample proposal
+        $proposal = Proposal::create([
+            'user_id' => $organization->id, // Adjust based on existing user IDs
+            'description' => 'A sample proposal for testing.',
+            'thumbnail' => 'proposal_thumbnails/sample_thumbnail.jpg',
+            'excerpt' => 'This is a sample proposal excerpt.',
+            'location' => 'Sample Location',
+            'target_community' => 'Sample Community',
+            'expected_impact' => 'Positive impact on the community.',
+            'urgent' => true,
+            'why_urgent' => 'Immediate funding required.',
+            'estimated_start_date' => now()->addDays(7),
+            'expected_completion_date' => now()->addDays(30),
+            'status' => 'pending',
+        ]);
 
-        // Fetch users with the role 'user'
-        $users = User::role('user')->get();
+        // Create sample timelines
+        $timelines = [
+            [
+                'name' => 'Initial Research',
+                'start_date' => now()->addDays(7),
+                'end_date' => now()->addDays(14),
+                'estimated_cost' => 5000,
+                'status' => 'pending',
+            ],
+            [
+                'name' => 'Implementation Phase',
+                'start_date' => now()->addDays(15),
+                'end_date' => now()->addDays(25),
+                'estimated_cost' => 10000,
+                'status' => 'pending',
+            ],
+        ];
 
-        foreach ($users as $user) {
-            // Create 3-10 proposals for each user
-            $numberOfProposals = rand(3, 10);
-
-            for ($i = 0; $i < $numberOfProposals; $i++) {
-                // Create a proposal
-                $proposal = Proposal::create([
-                    'user_id' => $user->id,
-                    'category_id' => 1,
-                    'description' => $faker->sentence(10),
-                    'location' => $faker->city,
-                    'thumbnail' => 'proposal_thumbnails/default.jpg',
-                    'excerpt' => $faker->sentence(20),
-                    'target_community' => $faker->words(3, true),
-                    'expected_impact' => $faker->sentence(8),
-                    'urgent' => $faker->boolean,
-                    'why_urgent' => $faker->optional()->sentence(12),
-                    'estimated_start_date' => $faker->dateTimeBetween('+1 week', '+2 weeks'),
-                    'expected_completion_date' => $faker->dateTimeBetween('+2 months', '+6 months'),
-                    'status' => 'pending',
-                ]);
-
-                // Create 2-5 timelines for each proposal
-                $numberOfTimelines = rand(2, 5);
-
-                for ($j = 0; $j < $numberOfTimelines; $j++) {
-                    ProposalTimeline::create([
-                        'proposal_id' => $proposal->id,
-                        'name' => $faker->sentence(4),
-                        'start_date' => $faker->dateTimeBetween('+1 week', '+2 weeks'),
-                        'end_date' => $faker->dateTimeBetween('+3 weeks', '+2 months'),
-                        'estimated_cost' => $faker->numberBetween(1000, 10000),
-                        'status' => 'pending',
-                    ]);
-                }
-
-                // Create 1-3 documents for each proposal
-                $numberOfDocuments = rand(1, 3);
-
-                for ($k = 0; $k < $numberOfDocuments; $k++) {
-                    // Simulate storing a file
-                    $fileName = $faker->uuid . '.pdf';
-                    $fakePath = "proposal_documents/{$fileName}";
-                    Storage::put($fakePath, 'Sample document content.');
-
-                    ProposalDocument::create([
-                        'proposal_id' => $proposal->id,
-                        'path' => $fakePath,
-                    ]);
-                }
-            }
+        foreach ($timelines as $timeline) {
+            ProposalTimeline::create([
+                'proposal_id' => $proposal->id,
+                'name' => $timeline['name'],
+                'start_date' => $timeline['start_date'],
+                'end_date' => $timeline['end_date'],
+                'estimated_cost' => $timeline['estimated_cost'],
+                'status' => $timeline['status'],
+            ]);
         }
 
-        $this->command->info('Proposals created successfully for users with the role "user".');
+        // Create sample documents
+        $documents = [
+            'proposal_documents/sample_doc1.pdf',
+            'proposal_documents/sample_doc2.pdf',
+        ];
+
+        foreach ($documents as $doc) {
+            Storage::put($doc, 'Sample content for testing.');
+            ProposalDocument::create([
+                'proposal_id' => $proposal->id,
+                'path' => $doc,
+            ]);
+        }
+
+        echo "Sample proposal, timelines, and documents created successfully.\n";
     }
 }
