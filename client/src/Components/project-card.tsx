@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import Link from "next/link";
 
 interface ProjectCardProps {
   title: string;
@@ -38,7 +39,9 @@ export function ProjectCard({
             <span className="font-semibold">${raised.toLocaleString()}</span>{" "}
             raised
           </div>
-          <Button className="bg-green-600 hover:bg-green-700">Support</Button>
+          <Link href="/project-detail">
+            <Button className="bg-green-600 hover:bg-green-700">Support</Button>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { NextResponse } from "next/server";
 
 // Define the type for the 'content' object
 type Content = {

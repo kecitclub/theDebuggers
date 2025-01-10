@@ -3,7 +3,6 @@ import { ProjectCard } from "@/components/project-card";
 import { CategoriesSection } from "@/components/categories-section";
 import { TestimonialSection } from "@/components/testimonial-section";
 
-
 export default function Home() {
   const projects = [
     {
@@ -32,10 +31,12 @@ export default function Home() {
   ];
 
   return (
-    <main className="max-w-7xl mx-auto px-2">
+    <main className="">
       <HeroSection />
-      <section className="px-4 md:px-6 py-12">
-        <h2 className="text-2xl font-bold mb-8">Trending Projects</h2>
+      <section className=" md:px-6 py-12 max-w-7xl mx-auto px-2">
+        <h2 className="text-2xl font-bold mb-8 text-center">
+          Trending Projects
+        </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, i) => (
             <ProjectCard key={i} {...project} />

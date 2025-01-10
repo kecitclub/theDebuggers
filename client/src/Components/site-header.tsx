@@ -3,8 +3,14 @@ import { Button } from "@/components/ui/button";
 
 export function SiteHeader() {
   return (
-    <header className="max-w-7xl mx-auto px-2">
-      <div className="flex h-16 items-center justify-between">
+    <header
+      className="sticky p-3 top-0 bg-indigo-50
+ z-20 shadow-md"
+      style={{
+        boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+      }}
+    >
+      <div className="flex h-16 items-center justify-between max-w-7xl mx-auto  px-2">
         <Link href="/" className="flex items-center space-x-2">
           <span className="text-xl font-bold text-green-600">EK Kadam</span>
         </Link>
