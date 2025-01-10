@@ -1,3 +1,4 @@
+import { Facebook, Instagram, Twitter } from 'lucide-react';
 import Link from 'next/link'
 export function SiteFooter() {
   return (
@@ -13,18 +14,18 @@ export function SiteFooter() {
           <div>
             <h4 className="text-sm font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              <li className="text-white-600 hover:text-green-700">About Us</li>
+              <Link href="/about" className="text-white-600 hover:text-green-700">About Us</Link>
               <li className="text-white-600 hover:text-green-700">How It Works</li>
               <li className="text-white-600 hover:text-green-700">Projects</li>
-              <Link  href="/contact"  className="text-white-600 hover:text-green-700">Contact</Link>
+              <Link href="/contact" className="text-white-600 hover:text-green-700">Contact</Link>
             </ul>
           </div>
           <div>
             <h4 className="text-sm font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-sm">
-              <Link href="/privacy-policy" className="text-white-600 hover:underline">
+              <Link href="/privacy-policy" className="text-white-600 hover:text-green-700 underline">
                 Privacy Policy</Link><br></br>
-              <Link href="/terms-and-conditions" className="text-white-600 hover:underline">
+              <Link href="/terms-and-conditions" className="text-white-600 hover:text-green-700 underline">
                 Terms & Conditions
               </Link>
 
@@ -33,9 +34,9 @@ export function SiteFooter() {
           <div>
             <h4 className="text-sm font-semibold mb-4">Connect With Us</h4>
             <div className="flex space-x-4">
-              <div className="w-8 h-8 rounded-full bg-gray-800" />
-              <div className="w-8 h-8 rounded-full bg-gray-800" />
-              <div className="w-8 h-8 rounded-full bg-gray-800" />
+              <Facebook />
+              <Instagram />
+              <Twitter />
             </div>
           </div>
         </div>

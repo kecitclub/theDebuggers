@@ -15,7 +15,7 @@ export function SiteHeader() {
           <Link href="/projects" className="text-sm font-medium">
             Projects
           </Link>
-          <Link href="/start" className="text-sm font-medium">
+          <Link href="/apply-proposal" className="text-sm font-medium">
             Start a Project
           </Link>
           <Link href="/success-stories" className="text-sm font-medium">
