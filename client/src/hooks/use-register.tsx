@@ -63,7 +63,7 @@ export default function useRegister() {
       console.log(formData);
       try {
         const data = await register(formData);
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.access_token);
         localStorage.setItem("role", data.role);
         toast.success("Login successful");
         router.replace(`/dashboard/${data.role}/`);

@@ -20,7 +20,13 @@ interface DropDownProps {
   }[];
 }
 
-const DropDown = ({ handlechange, name, labelItems, label, placeholder }: DropDownProps) => {
+const DropDown = ({
+  handlechange,
+  name,
+  labelItems,
+  label,
+  placeholder,
+}: DropDownProps) => {
   return (
     <div className="grid w-full gap-2">
       <Label htmlFor={name}>{label}</Label>
@@ -44,11 +50,11 @@ const DropDown = ({ handlechange, name, labelItems, label, placeholder }: DropDo
 // InputField Component
 interface InputFieldProps {
   name: string;
-  value: string;
+  value?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   required?: boolean;
-  label?: string;
+  label: string;
   type: string;
 }
 
@@ -78,21 +84,42 @@ const InputField = ({
 };
 
 // Main RegisterForm Component
-export default function VendorRegisterForm({ className }: React.ComponentPropsWithoutRef<"div">) {
-  const [provinces, setProvinces] = useState<{ id: string; name: string }[]>([]);
-  const [districts, setDistricts] = useState<{ id: string; name: string }[]>([]);
-  const [municipalitiesList, setMunicipalitiesList] = useState<{ id: string; name: string }[]>([]);
+export default function VendorRegisterForm({
+  className,
+}: React.ComponentPropsWithoutRef<"div">) {
+  const [provinces, setProvinces] = useState<{ id: string; name: string }[]>(
+    []
+  );
+  const [districts, setDistricts] = useState<{ id: string; name: string }[]>(
+    []
+  );
+  const [municipalitiesList, setMunicipalitiesList] = useState<
+    { id: string; name: string }[]
+  >([]);
 
-  const { onChange, onSumit, handlechange, formData } = useOrgRegister();
+  const {
+    onChange,
+    onSumit,
+    handlechange,
+    handlePanFileChange,
+    handleStampFileChange,
+    pancard,
+    stamp,
+    formData,
+  } = useOrgRegister();
 
-  const handleProvinceChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleProvinceChange = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const provinceId = e.target.value;
     const response = await district(provinceId);
     setDistricts(response);
     handlechange(e); // Update formData
   };
 
-  const handleDistrictChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleDistrictChange = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const districtId = e.target.value;
     const response = await municipalities(districtId);
     setMunicipalitiesList(response);
@@ -109,8 +136,8 @@ export default function VendorRegisterForm({ className }: React.ComponentPropsWi
 
   return (
     <>
-      <form onSubmit={onSumit}>
-      <input type="hidden" name="role" value={'user'}  />
+      <form onSubmit={onSumit} encType="multipart/form-data">
+        <input type="hidden" name="role" value={"user"} />
         <div className="flex flex-col gap-6">
           <InputField
             name="name"
@@ -155,6 +182,7 @@ export default function VendorRegisterForm({ className }: React.ComponentPropsWi
           </div>
 
           <InputField
+            label="Address"
             name="address"
             value={formData.address}
             onChange={onChange}
@@ -163,6 +191,7 @@ export default function VendorRegisterForm({ className }: React.ComponentPropsWi
           />
 
           <InputField
+            label="Password"
             name="password"
             value={formData.password}
             onChange={onChange}
@@ -171,6 +200,7 @@ export default function VendorRegisterForm({ className }: React.ComponentPropsWi
           />
 
           <InputField
+            label="Confirm Password"
             name="password_confirmation"
             value={formData.password_confirmation}
             onChange={onChange}
@@ -178,6 +208,7 @@ export default function VendorRegisterForm({ className }: React.ComponentPropsWi
             type="password"
           />
           <InputField
+            label="Chairman"
             name="chairman"
             value={formData.chairman}
             onChange={onChange}
@@ -185,20 +216,21 @@ export default function VendorRegisterForm({ className }: React.ComponentPropsWi
             type="text"
           />
           <InputField
+            label="Pan Card"
             name="pan_card"
-            value={formData.pan_card}
-            onChange={onChange}
+            onChange={handlePanFileChange}
             placeholder="******"
             type="file"
           />
           <InputField
+            label="Stamp"
             name="stamp"
-            value={formData.stamp}
-            onChange={onChange}
+            onChange={handleStampFileChange}
             placeholder=""
             type="file"
           />
           <InputField
+            label="Established Date"
             name="established_date"
             value={formData.established_date}
             onChange={onChange}

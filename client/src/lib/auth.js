@@ -1,7 +1,11 @@
 import api from "./axios";
 
 export const register = async (data) => {
-  const response = await api.post("/register", data);
+  const response = await api.post("/register", data,{
+    headers: {
+      'Content-Type': 'multipart/form-data', // Optional: Not necessary to include
+    },
+  });
   return response.data;
 };
 

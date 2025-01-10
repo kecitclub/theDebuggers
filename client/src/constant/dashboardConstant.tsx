@@ -18,6 +18,6 @@ export const clientAdmin = [
     ],
   },
   {
-    slug: "admin",
+    slug: "organization",
   },
 ];
