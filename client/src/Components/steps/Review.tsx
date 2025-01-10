@@ -111,6 +111,7 @@ const Review = () => {
         <CardContent>
           {formData.documents ? (
             <ul className="list-disc pl-4">
+              {console.log(formData.documents)}
               {Array.from(formData.documents).map(
                 (file: File, index: number) => (
                   <li key={index} className="text-gray-600">
