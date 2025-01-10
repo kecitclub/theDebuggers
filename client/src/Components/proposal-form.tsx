@@ -1,16 +1,14 @@
 "use client";
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import * as z from "zod";
 import { Button } from "@/components/ui/button";
-// import { toast } from "sonner";
 import { toast } from "react-toastify";
 import BasicInfo from "./steps/BasicInfo";
 import TimelineInfo from "./steps/TimelineInfo";
 import Milestones from "./steps/Milestones";
 import Documents from "./steps/Documents";
 import Review from "./steps/Review";
+import { SpamProtection } from "./utils/SpamPortection";
 import { cn } from "@/lib/utils";
 
 const steps = [
@@ -30,7 +28,6 @@ const ProjectFormWrapper = () => {
   });
 
   const onSubmit = async (data: any) => {
-    // Only process submission on the review step
     if (currentStep !== steps.length) {
       nextStep();
       return;
@@ -38,36 +35,20 @@ const ProjectFormWrapper = () => {
 
     try {
       setIsSubmitting(true);
-      console.log("Form data:", data);
 
-      // Create FormData instance for file upload
-      const formData = new FormData();
+      const userId = "111"; // Generate a random user ID for demonstration
+      const spamResult = await SpamProtection.processPost(data, userId);
 
-      // Append all non-file data
-      Object.keys(data).forEach((key) => {
-        if (key !== "documents") {
-          formData.append(
-            key,
-            typeof data[key] === "object"
-              ? JSON.stringify(data[key])
-              : data[key]
-          );
-        }
-      });
-
-      // Append documents if they exist
-      if (data.documents) {
-        Array.from(data.documents).forEach((file: File, index: number) => {
-          formData.append(`documents[${index}]`, file);
-        });
+      // Check if the content is considered spam
+      if (spamResult) {
+        toast.error("Spam detected! Please revise your content.");
+        return; // Prevent further form submission if spam is detected
       }
 
-      // Here you would send the formData to your backend
-      // For now, we'll just simulate a successful submission
+      // Simulate form submission
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       toast.success("Project submitted successfully!");
-      // Optionally reset form or redirect
       methods.reset();
       setCurrentStep(1);
     } catch (error) {

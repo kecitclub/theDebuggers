@@ -52,7 +52,6 @@ export default function useRegister() {
       );
     } else {
       try {
-        console.log(formData);
         const data = await register({
           name,
           email,

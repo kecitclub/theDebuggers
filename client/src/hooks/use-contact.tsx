@@ -20,12 +20,11 @@ export default function useContact() {
   const { name, email, message, subject, phone } = formData;
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value)
     const { name, value } = event?.target;
     setformData({ ...formData, [name]: value });
   };
 
-  const onSumit = (event: FormEvent<HTMLFormElement |undefined>) => {
+  const onSumit = (event: FormEvent<HTMLFormElement | undefined>) => {
     event?.preventDefault();
     contact({
       name,
