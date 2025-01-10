@@ -1,3 +1,4 @@
+import { Facebook, Instagram, Twitter } from 'lucide-react';
 import Link from 'next/link'
 export function SiteFooter() {
   return (
@@ -16,7 +17,7 @@ export function SiteFooter() {
               <Link href="/about" className="text-white-600 hover:text-green-700">About Us</Link>
               <li className="text-white-600 hover:text-green-700">How It Works</li>
               <li className="text-white-600 hover:text-green-700">Projects</li>
-              <Link  href="/contact"  className="text-white-600 hover:text-green-700">Contact</Link>
+              <Link href="/contact" className="text-white-600 hover:text-green-700">Contact</Link>
             </ul>
           </div>
           <div>
@@ -33,9 +34,9 @@ export function SiteFooter() {
           <div>
             <h4 className="text-sm font-semibold mb-4">Connect With Us</h4>
             <div className="flex space-x-4">
-              <div className="w-8 h-8 rounded-full bg-gray-800" />
-              <div className="w-8 h-8 rounded-full bg-gray-800" />
-              <div className="w-8 h-8 rounded-full bg-gray-800" />
+              <Facebook />
+              <Instagram />
+              <Twitter />
             </div>
           </div>
         </div>
