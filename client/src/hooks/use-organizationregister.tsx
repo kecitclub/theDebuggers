@@ -2,7 +2,7 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { register } from "@/lib/auth";
-export default function useRegister() {
+export default function useOrgRegister() {
   const router = useRouter();
 
   const [formData, setformData] = useState({
@@ -10,10 +10,18 @@ export default function useRegister() {
     email: "",
     password: "",
     password_confirmation: "",
-    role: "",
+    role: "organization",
+    province_id: "",
+    district_id: "",
+    municipality_id: "",
+    address: "",
+    chairman: "",
+    pan_card: "",
+    stamp:"",
+    established_date: ""
   });
 
-  const { name, email, password, password_confirmation, role } = formData;
+  const {  password, password_confirmation } = formData;
 
   function isValidPassword(password: any) {
     if (password.length < 8) {
@@ -37,8 +45,9 @@ export default function useRegister() {
     const { name, value } = event?.target;
     setformData({ ...formData, [name]: value });
   };
-  const handlechange = (e: string) => {
-    setformData({ ...formData, role: e });
+  const handlechange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setformData({ ...formData, [name]: value }); // Dynamically set key-value pairs
   };
 
   const onSumit = async (event: FormEvent<HTMLFormElement>) => {
@@ -51,14 +60,9 @@ export default function useRegister() {
         "Password must contain Uppercase, lowercase,number and special character"
       );
     } else {
+      console.log(formData);
       try {
-        const data = await register({
-          name,
-          email,
-          password,
-          role,
-          password_confirmation,
-        });
+        const data = await register(formData);
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.role);
         toast.success("Login successful");
@@ -69,13 +73,9 @@ export default function useRegister() {
     }
   };
   return {
-    name,
-    email,
-    password,
-    password_confirmation,
+    formData,
     onSumit,
     onChange,
-    role,
     handlechange,
     // isLoading,
     // lodingstate,

@@ -1,57 +1,47 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useRegister from "@/hooks/use-register";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useEffect, useState } from "react";
-import { province } from "@/lib/auth";
+import { province, district, municipalities } from "@/lib/auth";
 
-interface props {
-  role: string;
-  handlechange: (e: string) => void;
+// DropDown Component
+interface DropDownProps {
+  handlechange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   placeholder: string;
   label?: string;
   name: string;
-  labelItems: string[];
+  labelItems: {
+    id: string;
+    name: string;
+  }[];
 }
-const DropDown = ({
-  role,
-  handlechange,
-  name,
-  labelItems,
-  label,
-  placeholder,
-}: props) => {
+
+const DropDown = ({ handlechange, name, labelItems, label, placeholder }: DropDownProps) => {
   return (
     <div className="grid w-full gap-2">
-      <Label htmlFor={`${name}`}>{label}</Label>
-      <Select value={role} name={`${name}`} onValueChange={handlechange}>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder={`${placeholder}`} />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {labelItems.map((item, index) => (
-              <SelectItem key={index} value={item.toLocaleLowerCase()}>
-                {item}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <Label htmlFor={name}>{label}</Label>
+      <select
+        name={name}
+        id={name}
+        onChange={handlechange}
+        className="w-full border rounded px-2 py-1"
+      >
+        <option value="">{placeholder}</option>
+        {labelItems.map((item) => (
+          <option key={item.id} value={item.id}>
+            {item.name}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
 
-interface inputProops {
+// InputField Component
+interface InputFieldProps {
   name: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -60,6 +50,7 @@ interface inputProops {
   label?: string;
   type: string;
 }
+
 const InputField = ({
   name,
   onChange,
@@ -68,117 +59,129 @@ const InputField = ({
   required,
   value,
   label,
-}: inputProops) => {
+}: InputFieldProps) => {
   return (
     <div className="grid w-full gap-2">
-      <Label htmlFor={`${name}`}>{label}</Label>
+      <Label htmlFor={name}>{label}</Label>
       <Input
         onChange={onChange}
-        name={`${name}`}
-        id={`${name}`}
-        type={`${type}`}
+        name={name}
+        id={name}
+        type={type}
         value={value}
-        placeholder={`${placeholder}`}
-        required
+        placeholder={placeholder}
+        required={required}
       />
     </div>
   );
 };
 
-export default function RegisterForm({
-  className,
-}: React.ComponentPropsWithoutRef<"div">) {
-  const [proviences, setProvinces] = useState(null);
-  useEffect(() => {
-    const fetchdata = async () => {
-      const response = await province();
-      const result = await response.json();
-      setProvinces(result);
-    };
-    fetchdata();
-  }, []);
+// Main RegisterForm Component
+export default function RegisterForm({ className }: React.ComponentPropsWithoutRef<"div">) {
+  const [provinces, setProvinces] = useState<{ id: string; name: string }[]>([]);
+  const [districts, setDistricts] = useState<{ id: string; name: string }[]>([]);
+  const [municipalitiesList, setMunicipalitiesList] = useState<{ id: string; name: string }[]>([]);
+
   const { onChange, onSumit, handlechange, formData } = useRegister();
+
+  const handleProvinceChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const provinceId = e.target.value;
+    const response = await district(provinceId);
+    setDistricts(response);
+    handlechange(e); // Update formData
+  };
+
+  const handleDistrictChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const districtId = e.target.value;
+    const response = await municipalities(districtId);
+    setMunicipalitiesList(response);
+    handlechange(e); // Update formData
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await province();
+      setProvinces(response);
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
       <form onSubmit={onSumit}>
+      <input type="hidden" name="role" value={'user'}  />
         <div className="flex flex-col gap-6">
-          <div className="w-full flex gap-2 items-center justify-center">
-            <InputField
-              name={"name"}
-              value={formData.name}
-              label="Full Name"
-              onChange={onChange}
-              placeholder={" Full Name"}
-              type={"text"}
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              onChange={onChange}
-              name="email"
-              id="email"
-              type="email"
-              value={formData.email}
-              placeholder="m@example.com"
-              required
-            />
-          </div>
-          <div className="w-full flex gap-2 items-center justify-center">
+          <InputField
+            name="name"
+            value={formData.name}
+            label="Full Name"
+            onChange={onChange}
+            placeholder="Full Name"
+            type="text"
+          />
+
+          <InputField
+            name="email"
+            value={formData.email}
+            label="Email"
+            onChange={onChange}
+            placeholder="m@example.com"
+            type="email"
+          />
+
+          <div className="grid gap-4">
             <DropDown
-              role={formData.province_id}
-              handlechange={handlechange}
-              placeholder={"Select your provience"}
-              label={"Provience"}
-              name={"province_id"}
-              labelItems={["User", "Vendor"]}
+              handlechange={handleProvinceChange}
+              placeholder="Select your province"
+              label="Province"
+              name="province_id"
+              labelItems={provinces}
             />
             <DropDown
-              role={formData.district_id}
-              handlechange={handlechange}
-              placeholder={"Select your district"}
-              label={"District"}
-              name={"district_id"}
-              labelItems={["User", "Vendor"]}
+              handlechange={handleDistrictChange}
+              placeholder="Select your district"
+              label="District"
+              name="district_id"
+              labelItems={districts}
             />
-          </div>
-          <div className="w-full flex gap-2 items-center justify-center">
             <DropDown
-              role={formData.municipality_id}
               handlechange={handlechange}
-              placeholder={"Select your Municiplity"}
-              label={"Municiplity"}
-              name={"municipality_id"}
-              labelItems={["User", "Vendor"]}
-            />
-            <InputField
-              name={"address"}
-              value={formData.address}
-              onChange={onChange}
-              placeholder={"Enter your address"}
-              type={"text"}
+              placeholder="Select your municipality"
+              label="Municipality"
+              name="municipality_id"
+              labelItems={municipalitiesList}
             />
           </div>
 
           <InputField
-            name={"password"}
+            name="address"
+            value={formData.address}
+            onChange={onChange}
+            placeholder="Enter your address"
+            type="text"
+          />
+
+          <InputField
+            name="password"
             value={formData.password}
             onChange={onChange}
-            placeholder={"******"}
-            type={"password"}
+            placeholder="******"
+            type="password"
           />
+
           <InputField
-            name={"password_confirmation"}
+            name="password_confirmation"
             value={formData.password_confirmation}
             onChange={onChange}
-            placeholder={"******"}
-            type={"password"}
+            placeholder="******"
+            type="password"
           />
 
           <Button type="submit" className="w-full">
             Register
           </Button>
         </div>
+
         <div className="mt-4 text-center text-sm">
           Already have an account?{" "}
           <a href="/auth/login" className="underline underline-offset-4">

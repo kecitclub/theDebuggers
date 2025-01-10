@@ -10,7 +10,7 @@ export default function useRegister() {
     email: "",
     password: "",
     password_confirmation: "",
-    role: "",
+    role: "user",
     province_id: "",
     district_id: "",
     municipality_id: "",
@@ -45,8 +45,9 @@ export default function useRegister() {
     const { name, value } = event?.target;
     setformData({ ...formData, [name]: value });
   };
-  const handlechange = (e: string) => {
-    setformData({ ...formData, role: e });
+  const handlechange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setformData({ ...formData, [name]: value }); // Dynamically set key-value pairs
   };
 
   const onSumit = async (event: FormEvent<HTMLFormElement>) => {
@@ -59,6 +60,7 @@ export default function useRegister() {
         "Password must contain Uppercase, lowercase,number and special character"
       );
     } else {
+      console.log(formData);
       try {
         const data = await register(formData);
         localStorage.setItem("token", data.token);

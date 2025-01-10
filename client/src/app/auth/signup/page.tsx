@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import OrganizationRegisterForm from "@/components/auth/vendor-register-form";
+import VendorRegisterForm from "@/components/auth/vendor-register-form";
 
 export default function Page() {
   return (
@@ -47,7 +48,7 @@ export default function Page() {
                 </CardHeader>
                 <CardContent>
                   {/* <RegisterForm /> */}
-                  <OrganizationRegisterForm/>
+                  <VendorRegisterForm/>
                 </CardContent>
               </Card>
             </TabsContent>
