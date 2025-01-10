@@ -8,17 +8,16 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
-import { province } from "@/lib/auth";
 
 interface props {
   role: string;
   handlechange: (e: string) => void;
   placeholder: string;
-  label?: string;
+  label: string;
   name: string;
   labelItems: string[];
 }
@@ -57,8 +56,8 @@ interface inputProops {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   required?: boolean;
-  label?: string;
   type: string;
+  label?: string;
 }
 const InputField = ({
   name,
@@ -66,8 +65,8 @@ const InputField = ({
   placeholder,
   type,
   required,
-  value,
   label,
+  value,
 }: inputProops) => {
   return (
     <div className="grid w-full gap-2">
@@ -85,19 +84,19 @@ const InputField = ({
   );
 };
 
-export default function RegisterForm({
+export default function OrganizationRegisterForm({
   className,
 }: React.ComponentPropsWithoutRef<"div">) {
-  const [proviences, setProvinces] = useState(null);
-  useEffect(() => {
-    const fetchdata = async () => {
-      const response = await province();
-      const result = await response.json();
-      setProvinces(result);
-    };
-    fetchdata();
-  }, []);
-  const { onChange, onSumit, handlechange, formData } = useRegister();
+  const {
+    email,
+    name,
+    onChange,
+    onSumit,
+    password,
+    password_confirmation,
+    handlechange,
+    role,
+  } = useRegister();
   return (
     <>
       <form onSubmit={onSumit}>
@@ -105,10 +104,10 @@ export default function RegisterForm({
           <div className="w-full flex gap-2 items-center justify-center">
             <InputField
               name={"name"}
-              value={formData.name}
-              label="Full Name"
+              value={name}
               onChange={onChange}
-              placeholder={" Full Name"}
+              placeholder={"Organization Name"}
+              label="Organization Name"
               type={"text"}
             />
           </div>
@@ -119,57 +118,92 @@ export default function RegisterForm({
               name="email"
               id="email"
               type="email"
-              value={formData.email}
+              value={email}
               placeholder="m@example.com"
               required
             />
           </div>
           <div className="w-full flex gap-2 items-center justify-center">
             <DropDown
-              role={formData.province_id}
+              role={role}
               handlechange={handlechange}
               placeholder={"Select your provience"}
               label={"Provience"}
-              name={"province_id"}
+              name={"provience"}
               labelItems={["User", "Vendor"]}
             />
             <DropDown
-              role={formData.district_id}
+              role={role}
               handlechange={handlechange}
               placeholder={"Select your district"}
               label={"District"}
-              name={"district_id"}
+              name={"district"}
               labelItems={["User", "Vendor"]}
             />
           </div>
           <div className="w-full flex gap-2 items-center justify-center">
             <DropDown
-              role={formData.municipality_id}
+              role={role}
               handlechange={handlechange}
               placeholder={"Select your Municiplity"}
               label={"Municiplity"}
-              name={"municipality_id"}
+              name={"municiplity"}
               labelItems={["User", "Vendor"]}
             />
             <InputField
               name={"address"}
-              value={formData.address}
+              label="Address"
+              value={password_confirmation}
               onChange={onChange}
               placeholder={"Enter your address"}
               type={"text"}
             />
           </div>
 
+          <div className="w-full flex gap-2 items-center justify-center">
+            <InputField
+              onChange={onChange}
+              placeholder={"Enter your name"}
+              name={"chairman"}
+              value={""}
+              type={"text"}
+            />
+            <InputField
+              name={"stamp"}
+              value={""}
+              onChange={onChange}
+              placeholder={"Enter your stamp"}
+              type={"file"}
+            />
+          </div>
+
+          <div className="w-full flex gap-2 items-center justify-center">
+            <InputField
+              name={"pan no"}
+              value={""}
+              onChange={onChange}
+              placeholder={"Enter your pan No"}
+              type={"number"}
+            />
+            <InputField
+              name={"estiblished date"}
+              value={"password_confirmation"}
+              onChange={onChange}
+              placeholder={"Established date"}
+              type={"date"}
+            />
+          </div>
+
           <InputField
             name={"password"}
-            value={formData.password}
+            value={password}
             onChange={onChange}
             placeholder={"******"}
             type={"password"}
           />
           <InputField
             name={"password_confirmation"}
-            value={formData.password_confirmation}
+            value={password_confirmation}
             onChange={onChange}
             placeholder={"******"}
             type={"password"}
