@@ -28,6 +28,10 @@ class ProposalResource extends Resource
             ->schema([
                 Card::make()
                     ->schema([
+                        Select::make('category_id')
+                            ->label('Category')
+                            ->relationship('category', 'name')
+                            ->required(),
                         Select::make('user_id')
                             ->label('User')
                             ->relationship('user', 'name')
