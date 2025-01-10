@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 interface ProjectCardProps {
   title: string;
@@ -22,6 +23,8 @@ export function ProjectCard({
 
   return (
     <div className="max-w-7xl mx-auto rounded-lg border bg-card text-card-foreground shadow-sm">
+      <Badge className="bg-green-600 mx-3"> Environment</Badge>
+      <Badge className="bg-[#FF9800] ">Urgent</Badge>
       <div className="relative h-48 w-full">
         <Image
           src={image}
