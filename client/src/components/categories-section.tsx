@@ -10,7 +10,7 @@ export function CategoriesSection() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await categories();
-      setServerCategories(response);
+      setServerCategories(response.data);
     };
     fetchData();
   }, []);
