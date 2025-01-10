@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('expected_impact');
             $table->boolean('urgent');
             $table->text('why_urgent')->nullable();
-            $table->dateTimee('estimated_start_date');
+            $table->dateTime('estimated_start_date');
             $table->dateTime('expected_completion_date');
             $table->string('status')->default('pending');
             $table->timestamps();
