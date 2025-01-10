@@ -1,13 +1,6 @@
 import type { Metadata } from "next";
 import { AppSidebar } from "@/components/Dashboard/app-sidebar";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
@@ -16,14 +9,12 @@ import {
 } from "@/components/ui/sidebar";
 import { clientAdmin } from "@/constant/dashboardConstant";
 import { notFound } from "next/navigation";
+import BreadcrumbComponent from "@/components/Dashboard/breadcumb";
 
 export const metadata: Metadata = {
   title: "Eak Kadam",
   description: "A steps toward the betterment",
 };
-export async function generateStaticParams() {
-  return [{ slug: "user" }, { slug: "admin" }];
-}
 export default async function Layout({
   children,
   params,
@@ -39,29 +30,16 @@ export default async function Layout({
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar role={slug} />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
+        <header className="flex h-6 pl-2  shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2  pr-2 rounded-lg">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Building Your Application
-                    {slug}
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+            <BreadcrumbComponent />
           </div>
         </header>
-        {children}
+        <main className="p-2 rounded-lg ">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
