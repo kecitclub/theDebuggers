@@ -1,5 +1,13 @@
+import axios from "axios";
 import { Leaf, Heart, GraduationCap, Droplets } from "lucide-react";
+import Link from "next/link";
 
+
+const categoriesData=async()=>{
+  const response=await axios.get(`/categories/`);
+  console.log(response);
+  return <></>
+}
 export function CategoriesSection() {
   const categories = [
     { icon: Leaf, label: "Environment" },
@@ -18,9 +26,9 @@ export function CategoriesSection() {
               key={index}
               className="flex flex-col items-center space-y-2 cursor-pointer"
             >
-              <div className="p-4 rounded-full bg-green-100">
+              <Link href={`/category/${category.label}`} className="p-4 rounded-full bg-green-100">
                 <category.icon className="h-6 w-6 text-green-600" />
-              </div>
+              </Link>
               <span className="text-sm font-medium">{category.label}</span>
             </div>
           ))}

@@ -9,14 +9,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <body>
+    <>
       <SiteHeader />
       {children}
       <SiteFooter />
-    </body>
+    </>
   );
 }
