@@ -24,16 +24,35 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'in:user,vendor'],
+            'role' => ['required', 'in:user,organization'],
+            'province_id' => ['required', 'exists:provinces,id'],
+            'district_id' => ['required', 'exists:districts,id'],
+            'municipality_id' => ['required', 'exists:municipalities,id'],
+            'address' => ['required', 'string', 'max:255'],
         ]);
+
+        if ($request->role === 'organization') {
+            $request->validate([
+                'chairman' => ['required', 'string', 'max:255'],
+                'pan_card' => ['required', 'file'],
+                'stamp' => ['required', 'file'],
+                'established_date' => ['required', 'date'],
+            ]);
+        }
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->string('password')),
+            'province_id' => $request->province_id,
+            'district_id' => $request->district_id,
+            'municipality_id' => $request->municipality_id,
+            'address' => $request->address,
         ]);
 
         $user->assignRole($request->role);
+
+
 
         event(new Registered($user));
 
