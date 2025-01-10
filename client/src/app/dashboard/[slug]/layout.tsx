@@ -29,7 +29,7 @@ export default async function Layout({
   }
 
   return (
-    <SidebarProvider>
+    <SidebarProvider className="mt-6">
       <AppSidebar role={slug} />
       <SidebarInset>
         <header className="flex h-6 pl-2  shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
@@ -39,7 +39,7 @@ export default async function Layout({
             <BreadcrumbComponent />
           </div>
         </header>
-        <main className="p-2 rounded-lg ">{children}</main>
+        <main className="p-2 rounded-lg mt-4 ">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

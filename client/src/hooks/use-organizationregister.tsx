@@ -2,22 +2,23 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { register } from "@/lib/auth";
-export default function useRegister() {
+export default function useOrgRegister() {
   const router = useRouter();
 
+  const [stamp,setstamp]=useState();
+  const [pancard,setpancard]=useState();
   const [formData, setformData] = useState({
     name: "",
     email: "",
     password: "",
     password_confirmation: "",
-    role: "user",
+    role: "organization",
     province_id: "",
     district_id: "",
     municipality_id: "",
     address: "",
     chairman: "",
-    pan_card: "",
-    stamp:"",
+
     established_date: ""
   });
 
@@ -50,6 +51,23 @@ export default function useRegister() {
     setformData({ ...formData, [name]: value }); // Dynamically set key-value pairs
   };
 
+  const handleStampFileChange = (e) => {
+    if(e.target.files && e.target.files.length>0){
+        setstamp(e.target.files[0]);
+
+    }else{
+        alert("Please select a file");
+    }
+  }
+  const handlePanFileChange = (e) => {
+    if(e.target.files && e.target.files.length>0){
+        setpancard(e.target.files[0]);
+
+    }else{
+        alert("Please select a file");
+    }
+  }
+
   const onSumit = async (event: FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
 
@@ -60,9 +78,25 @@ export default function useRegister() {
         "Password must contain Uppercase, lowercase,number and special character"
       );
     } else {
-      console.log(formData);
-      try {
-        const data = await register(formData);
+        try {
+            const updatedData = new FormData();
+            updatedData.append("name", formData.name);
+            updatedData.append("email", formData.email);
+            updatedData.append("password", formData.password);
+            updatedData.append("password_confirmation", formData.password_confirmation);
+            updatedData.append("role", formData.role);
+            updatedData.append("province_id", formData.province_id);
+            updatedData.append("district_id", formData.district_id);
+            updatedData.append("municipality_id", formData.municipality_id);
+            updatedData.append("address", formData.address);
+            updatedData.append("chairman", formData.chairman);
+            updatedData.append("established_date", formData.established_date);
+            updatedData.append("stamp", stamp);
+            updatedData.append("pan_card", pancard);
+
+            // const updatedData = { ...formData, stamp, pan_card: pancard};
+            console.log(updatedData);
+        const data = await register(updatedData);
         localStorage.setItem("token", data.access_token);
         localStorage.setItem("role", data.role);
         toast.success("Login successful");
@@ -77,6 +111,10 @@ export default function useRegister() {
     onSumit,
     onChange,
     handlechange,
+    handlePanFileChange,
+    handleStampFileChange,
+    stamp,
+    pancard
     // isLoading,
     // lodingstate,
   };
