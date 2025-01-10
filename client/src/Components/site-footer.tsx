@@ -13,7 +13,7 @@ export function SiteFooter() {
           <div>
             <h4 className="text-sm font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              <li className="text-white-600 hover:text-green-700">About Us</li>
+              <Link href="/about" className="text-white-600 hover:text-green-700">About Us</Link>
               <li className="text-white-600 hover:text-green-700">How It Works</li>
               <li className="text-white-600 hover:text-green-700">Projects</li>
               <Link  href="/contact"  className="text-white-600 hover:text-green-700">Contact</Link>
@@ -22,9 +22,9 @@ export function SiteFooter() {
           <div>
             <h4 className="text-sm font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-sm">
-              <Link href="/privacy-policy" className="text-white-600 hover:underline">
+              <Link href="/privacy-policy" className="text-white-600 hover:text-green-700 underline">
                 Privacy Policy</Link><br></br>
-              <Link href="/terms-and-conditions" className="text-white-600 hover:underline">
+              <Link href="/terms-and-conditions" className="text-white-600 hover:text-green-700 underline">
                 Terms & Conditions
               </Link>
 
