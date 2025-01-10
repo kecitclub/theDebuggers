@@ -9,6 +9,8 @@ class Proposal extends Model
     protected $fillable = [
         'user_id',
         'category_id',
+        'thumbnail',
+        'excerpt',
         'description',
         'location',
         'target_community',

@@ -14,6 +14,8 @@ class ProposalController extends Controller
         $validatedData = $request->validate([
             'user_id' => 'required|exists:users,id',
             'description' => 'required|string',
+            'thumbnail' => 'required|file',
+            'excerpt' => 'required|string',
             'location' => 'required|string',
             'target_community' => 'required|string',
             'expected_impact' => 'required|string',
@@ -36,6 +38,8 @@ class ProposalController extends Controller
         $proposal = Proposal::create([
             'user_id' => $validatedData['user_id'],
             'description' => $validatedData['description'],
+            'thumbnail' => $validatedData['thumbnail']->store('proposal_thumbnails'),
+            'excerpt' => $validatedData['excerpt'],
             'location' => $validatedData['location'],
             'target_community' => $validatedData['target_community'],
             'expected_impact' => $validatedData['expected_impact'],
@@ -72,5 +76,14 @@ class ProposalController extends Controller
             'message' => 'Proposal created successfully!',
             'proposal' => $proposal,
         ], 201);
+    }
+
+    public function getTradingProposal()
+    {
+        $proposals = Proposal::where('status', 'approved')->get();
+
+        return response()->json([
+            'proposals' => $proposals,
+        ]);
     }
 }
