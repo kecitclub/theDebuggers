@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Category;
 use App\Models\Proposal;
 use Illuminate\Database\Seeder;
 use App\Models\ProposalDocument;
@@ -21,9 +22,13 @@ class ProposalSeeder extends Seeder
             echo "No organization user found. Please create an organization user first.\n";
             return;
         }
+        $category = Category::first();
         // Create a sample proposal
         $proposal = Proposal::create([
-            'user_id' => $organization->id, // Adjust based on existing user IDs
+            'user_id' => $organization->id,
+            'category_id' => $category->id,
+            'title' => "Construction of road",
+            'slug' => 'construction-of-road',
             'description' => 'A sample proposal for testing.',
             'thumbnail' => 'proposal_thumbnails/sample_thumbnail.jpg',
             'excerpt' => 'This is a sample proposal excerpt.',

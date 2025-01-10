@@ -6,19 +6,20 @@ import { Badge } from "@/components/ui/badge";
 
 interface ProjectCardProps {
   title: string;
-  description: string;
-  image: string;
+  excerpt: string;
+  thumbnail: string;
   raised: number;
   goal: number;
 }
 
 export function ProjectCard({
   title,
-  description,
-  image,
+  excerpt,
+  thumbnail,
   raised,
   goal,
 }: ProjectCardProps) {
+  const imageurl = process.env.NEXT_PUBLIC_API_URL + "/" + thumbnail;
   const progress = (raised / goal) * 100;
 
   return (
@@ -27,7 +28,7 @@ export function ProjectCard({
       <Badge className="bg-[#FF9800] ">Urgent</Badge>
       <div className="relative h-48 w-full">
         <Image
-          src={image}
+          src={imageurl}
           alt={title}
           fill
           className="object-cover rounded-t-lg"
@@ -35,7 +36,7 @@ export function ProjectCard({
       </div>
       <div className="p-4">
         <h3 className="text-lg font-semibold">{title}</h3>
-        <p className="text-sm text-gray-500 mt-2">{description}</p>
+        <p className="text-sm text-gray-500 mt-2">{excerpt}</p>
         <Progress value={progress} className="my-4" />
         <div className="flex items-center justify-between">
           <div className="text-sm">

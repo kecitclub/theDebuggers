@@ -6,6 +6,7 @@ use App\Models\Proposal;
 use Illuminate\Http\Request;
 use App\Models\ProposalDocument;
 use App\Models\ProposalTimeline;
+use App\Http\Resources\ProposalResource;
 
 class ProposalController extends Controller
 {
@@ -13,6 +14,7 @@ class ProposalController extends Controller
     {
         $validatedData = $request->validate([
             'user_id' => 'required|exists:users,id',
+            'category_id' => 'required|exists:categories,id',
             'description' => 'required|string',
             'thumbnail' => 'required|file',
             'excerpt' => 'required|string',
@@ -78,12 +80,9 @@ class ProposalController extends Controller
         ], 201);
     }
 
-    public function getTradingProposal()
+    public function getTrandingProposal()
     {
-        $proposals = Proposal::where('status', 'approved')->get();
-
-        return response()->json([
-            'proposals' => $proposals,
-        ]);
+        $proposals = Proposal::with('timelines')->limit(3)->get();
+        return ProposalResource::collection($proposals);
     }
 }

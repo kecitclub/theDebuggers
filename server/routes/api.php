@@ -16,7 +16,7 @@ Route::get('/districts/{provinceId}', [LocationController::class, 'getDistricts'
 Route::get('/municipalities/{districtId}', [LocationController::class, 'getMunicipalities']);
 
 Route::get('/categories', [CategoryController::class, 'index']);
-Route::get('trading-proposals', [ProposalController::class, 'getTradingProposal']);
+Route::get('tranding-proposals', [ProposalController::class, 'getTrandingProposal']);
 
 Route::group(['middleware' => ['auth:sanctum', 'role:organization']], function () {
     Route::post('/proposals', [ProposalController::class, 'store']);
