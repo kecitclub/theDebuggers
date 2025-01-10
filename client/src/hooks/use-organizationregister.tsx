@@ -11,17 +11,9 @@ export default function useRegister() {
     password: "",
     password_confirmation: "",
     role: "",
-    province_id: "",
-    district_id: "",
-    municipality_id: "",
-    address: "",
-    chairman: "",
-    pan_card: "",
-    stamp:"",
-    established_date: ""
   });
 
-  const {  password, password_confirmation } = formData;
+  const { name, email, password, password_confirmation, role } = formData;
 
   function isValidPassword(password: any) {
     if (password.length < 8) {
@@ -60,7 +52,13 @@ export default function useRegister() {
       );
     } else {
       try {
-        const data = await register(formData);
+        const data = await register({
+          name,
+          email,
+          password,
+          role,
+          password_confirmation,
+        });
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.role);
         toast.success("Login successful");
@@ -71,9 +69,13 @@ export default function useRegister() {
     }
   };
   return {
-    formData,
+    name,
+    email,
+    password,
+    password_confirmation,
     onSumit,
     onChange,
+    role,
     handlechange,
     // isLoading,
     // lodingstate,

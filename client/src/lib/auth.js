@@ -9,6 +9,10 @@ export const login = async (data) => {
   const response = await api.post("/login", data);
   return response.data;
 };
+export const province = async () => {
+  const response = await api.get("/provinces");
+  return response.data;
+};
 
 export const logout = async () => {
   const response = await api.post("/logout");
