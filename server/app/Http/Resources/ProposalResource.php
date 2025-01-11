@@ -16,6 +16,8 @@ class ProposalResource extends JsonResource
     {
         return [
             'title' => $this->title,
+            'category' => $this->category->name,
+            'slug' => $this->slug,
             'excerpt' => $this->excerpt,
             'thumbnail' => $this->thumbnail,
             'raised' => 0,
