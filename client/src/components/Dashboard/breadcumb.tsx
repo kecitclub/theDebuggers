@@ -18,7 +18,7 @@ export default function BreadcrumbComponent() {
   // Generate breadcrumb items
   const breadcrumbs = fullPath.map((segment, index) => {
     // Construct the breadcrumb link
-    const href = `/dashboard/${fullPath.slice(0, index + 1).join('/')}`;
+    const href = `/dashboard/${fullPath.slice(0, index + 1).join('/').toUpperCase()}`;
     const isLast = index === fullPath.length - 1;
 
     return (
@@ -36,7 +36,7 @@ export default function BreadcrumbComponent() {
       <BreadcrumbList>
         {/* Root breadcrumb */}
         <BreadcrumbItem className="hidden  md:flex">
-          <BreadcrumbLink href="/dashboard/user/">dashboard</BreadcrumbLink>
+          <BreadcrumbLink className='capitalize' href="/dashboard/user/">dashboard</BreadcrumbLink>
           {breadcrumbs.length > 0 && <BreadcrumbSeparator className='flex'/>}
         </BreadcrumbItem>
         {/* Dynamic breadcrumbs */}

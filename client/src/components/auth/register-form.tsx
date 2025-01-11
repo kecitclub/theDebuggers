@@ -19,7 +19,13 @@ interface DropDownProps {
   }[];
 }
 
-const DropDown = ({ handlechange, name, labelItems, label, placeholder }: DropDownProps) => {
+const DropDown = ({
+  handlechange,
+  name,
+  labelItems,
+  label,
+  placeholder,
+}: DropDownProps) => {
   return (
     <div className="grid w-full gap-2">
       <Label htmlFor={name}>{label}</Label>
@@ -47,7 +53,7 @@ interface InputFieldProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   required?: boolean;
-  label?: string;
+  label: string;
   type: string;
 }
 
@@ -77,21 +83,33 @@ const InputField = ({
 };
 
 // Main RegisterForm Component
-export default function RegisterForm({ className }: React.ComponentPropsWithoutRef<"div">) {
-  const [provinces, setProvinces] = useState<{ id: string; name: string }[]>([]);
-  const [districts, setDistricts] = useState<{ id: string; name: string }[]>([]);
-  const [municipalitiesList, setMunicipalitiesList] = useState<{ id: string; name: string }[]>([]);
+export default function RegisterForm({
+  className,
+}: React.ComponentPropsWithoutRef<"div">) {
+  const [provinces, setProvinces] = useState<{ id: string; name: string }[]>(
+    []
+  );
+  const [districts, setDistricts] = useState<{ id: string; name: string }[]>(
+    []
+  );
+  const [municipalitiesList, setMunicipalitiesList] = useState<
+    { id: string; name: string }[]
+  >([]);
 
-  const { onChange, onSumit, handlechange, formData } = useRegister();
+  const { onChange, onSumit, handlechange, formData, loading } = useRegister();
 
-  const handleProvinceChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleProvinceChange = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const provinceId = e.target.value;
     const response = await district(provinceId);
     setDistricts(response);
     handlechange(e); // Update formData
   };
 
-  const handleDistrictChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleDistrictChange = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const districtId = e.target.value;
     const response = await municipalities(districtId);
     setMunicipalitiesList(response);
@@ -109,7 +127,7 @@ export default function RegisterForm({ className }: React.ComponentPropsWithoutR
   return (
     <>
       <form onSubmit={onSumit}>
-      <input type="hidden" name="role" value={'user'}  />
+        <input type="hidden" name="role" value={"user"} />
         <div className="flex flex-col gap-6">
           <InputField
             name="name"
@@ -154,6 +172,7 @@ export default function RegisterForm({ className }: React.ComponentPropsWithoutR
           </div>
 
           <InputField
+            label="Address"
             name="address"
             value={formData.address}
             onChange={onChange}
@@ -162,6 +181,7 @@ export default function RegisterForm({ className }: React.ComponentPropsWithoutR
           />
 
           <InputField
+            label="Password"
             name="password"
             value={formData.password}
             onChange={onChange}
@@ -170,6 +190,7 @@ export default function RegisterForm({ className }: React.ComponentPropsWithoutR
           />
 
           <InputField
+            label="Password Confirmation"
             name="password_confirmation"
             value={formData.password_confirmation}
             onChange={onChange}
@@ -178,10 +199,9 @@ export default function RegisterForm({ className }: React.ComponentPropsWithoutR
           />
 
           <Button type="submit" className="w-full">
-            Register
+            {loading ? "loading..." : "Register"}
           </Button>
         </div>
-
         <div className="mt-4 text-center text-sm">
           Already have an account?{" "}
           <a href="/auth/login" className="underline underline-offset-4">

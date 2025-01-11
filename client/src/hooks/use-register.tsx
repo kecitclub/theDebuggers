@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { register } from "@/lib/auth";
 export default function useRegister() {
   const router = useRouter();
-
+  const [loading, setloading] = useState(false);
   const [formData, setformData] = useState({
     name: "",
     email: "",
@@ -52,7 +52,7 @@ export default function useRegister() {
 
   const onSumit = async (event: FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
-
+    setloading(true);
     if (password != password_confirmation) {
       toast.error("Password and re_Password does not match");
     } else if (!isValidPassword(password)) {
@@ -66,9 +66,11 @@ export default function useRegister() {
         localStorage.setItem("token", data.access_token);
         localStorage.setItem("role", data.role);
         toast.success("Login successful");
-        router.replace(`/dashboard/${data.role}/`);
+        router.replace(`/dashboard/${data.role?data.role:'user'}`);
+        setloading(false);
       } catch (error: any) {
         toast.error(error?.response?.data?.message || "An error occurred");
+        setloading(false);
       }
     }
   };
@@ -77,7 +79,7 @@ export default function useRegister() {
     onSumit,
     onChange,
     handlechange,
-    // isLoading,
+    loading,
     // lodingstate,
   };
 }

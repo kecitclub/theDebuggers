@@ -1,7 +1,7 @@
 "use client";
 import { HeroSection } from "@/components/hero-section";
 import { ProjectCard } from "@/components/project-card";
-import { CategoriesSection } from "@/components/categories-section";
+// import { CategoriesSection } from "@/components/categories-section";
 import { TestimonialSection } from "@/components/testimonial-section";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";

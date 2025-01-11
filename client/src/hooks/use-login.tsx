@@ -1,42 +1,38 @@
-// import { useState, ChangeEvent, FormEvent } from "react";
-// import { useRouter } from "next/navigation";
-// import { toast } from "react-toastify";
-// export default function useLogin() {
-//   const dispacher = useAppDispatcher();
-//   const [login, { isLoading }] = useLoginMutation();
-//   const router = useRouter();
+import { useState, ChangeEvent, FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { login } from "@/lib/auth";
+export default function useLogin() {
+  const router = useRouter();
 
-//   const [formData, setformData] = useState({
-//     email: "",
-//     password: "",
-//   });
+  const [formData, setformData] = useState({
+    password: "",
+  });
 
-//   const { email, password } = formData;
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event?.target;
+    setformData({ ...formData, [name]: value });
+  };
+  const onSumit = async (event: FormEvent<HTMLFormElement>) => {
+    event?.preventDefault();
 
-//   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = event?.target;
-//     setformData({ ...formData, [name]: value });
-//   };
-
-//   const onSumit = (event: FormEvent<HTMLFormElement>) => {
-//     event?.preventDefault();
-//     login({ email, password })
-//       .unwrap()
-//       .then(() => {
-//         toast.success("Login Successfull");
-//         dispacher(setAuth());
-//         router.push("/dashboard");
-//       })
-//       .catch((e) => {
-//         toast.error(
-//           e?.data?.email?.[0] ||
-//             e?.data?.password?.[0] ||
-//             e?.data?.non_field_errors?.[0] ||
-//             e?.data?.detail ||
-//             "An error occurred. Please try again."
-//         );
-//       });
-//   };
-//   return { email, password, onSumit, onChange, isLoading };
-// }
-
+    console.log(formData);
+    try {
+      const data = await login(formData);
+      localStorage.setItem("token", data.access_token);
+      localStorage.setItem("role", data.role);
+      toast.success("Login successful");
+      router.replace(`/dashboard/${data.role}/`);
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || "An error occurred");
+    }
+  };
+  return {
+    formData,
+    onSumit,
+    onChange,
+    
+    // isLoading,
+    // lodingstate,
+  };
+}
