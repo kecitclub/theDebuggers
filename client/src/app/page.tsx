@@ -36,7 +36,7 @@ export default function Home() {
             ))}
           </div>
         </section>
-        <CategoriesSection />
+        {/* <CategoriesSection /> */}
         <TestimonialSection />
       </main>
       <SiteFooter />
