@@ -85,4 +85,16 @@ class ProposalController extends Controller
         $proposals = Proposal::with('timelines')->limit(3)->get();
         return ProposalResource::collection($proposals);
     }
+
+    public function getProposal($slug)
+    {
+        $proposal = Proposal::where('slug', $slug)->with('timelines')->first();
+        return new ProposalResource($proposal);
+    }
+
+    public function index()
+    {
+        $proposals = Proposal::with('timelines')->get();
+        return ProposalResource::collection($proposals);
+    }
 }

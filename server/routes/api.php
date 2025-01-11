@@ -17,10 +17,10 @@ Route::get('/municipalities/{districtId}', [LocationController::class, 'getMunic
 
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('tranding-proposals', [ProposalController::class, 'getTrandingProposal']);
+Route::get('/proposals', [ProposalController::class, 'index']);
 
 Route::group(['middleware' => ['auth:sanctum', 'role:organization']], function () {
     Route::post('/proposals', [ProposalController::class, 'store']);
-    Route::get('/proposals', [ProposalController::class, 'index']);
     Route::get('/proposals/{id}', [ProposalController::class, 'show']);
     Route::put('/proposals/{id}', [ProposalController::class, 'update']);
     // Route::delete('/proposals/{id}', [ProposalController::class, 'destroy']);

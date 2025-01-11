@@ -15,13 +15,17 @@ class ProposalResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'category' => $this->category->name,
+            'category_id' => $this->category_id,
             'slug' => $this->slug,
             'excerpt' => $this->excerpt,
             'thumbnail' => $this->thumbnail,
             'raised' => 0,
-            'goal' => $this->timelines->sum('amount'), // Sum the milestones' amounts
+            'goal' => $this->timelines->sum('amount'),
+            'status' => $this->status,
+            'created_at' => $this->created_at,
         ];
     }
 }
