@@ -77,14 +77,12 @@ const Navbar = () => {
       </nav>
       <div className="flex items-center space-x-4">
         <Link
-          href="auth/sign-in"
-          className="hidden md:inline-flex hover:bg-green-100 hover:text-green-600"
+          href="auth/signup"
+          className="hidden md:inline-flex hover:bg-green-100 hover:text-blue-600 bg-green-200 px-2 py-1 rounded-md"
         >
-          Sign In
+          Register
         </Link>
-        <Button className="bg-gradient-to-r from-green-600 to-indigo-600 text-white hover:from-green-700 hover:to-indigo-700 transition-all duration-300">
-          Join
-        </Button>
+
         <Button variant="ghost" className="md:hidden" aria-label="Menu">
           <Menu className="h-6 w-6" />
         </Button>

@@ -36,17 +36,22 @@ const ProjectFormWrapper = () => {
     try {
       setIsSubmitting(true);
 
-      const userId = "111"; // Generate a random user ID for demonstration
+      const userId = "4"; // Generate a random user ID for demonstration
       const spamResult = await SpamProtection.processPost(data, userId);
-
       // Check if the content is considered spam
       if (spamResult) {
+        // check if spamcount is present in localstorage. if yes increment its value
+        // if not set it to 1
+        if (localStorage.getItem("spamcount")) {
+          let count = localStorage.getItem("spamcount");
+          count = parseInt(count) + 1;
+          localStorage.setItem("spamcount", count);
+        } else {
+          localStorage.setItem("spamcount", "1");
+        }
         toast.error("Spam detected! Please revise your content.");
         return; // Prevent further form submission if spam is detected
       }
-
-      // Simulate form submission
-      await new Promise((resolve) => setTimeout(resolve, 1500));
 
       toast.success("Project submitted successfully!");
       methods.reset();
