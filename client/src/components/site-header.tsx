@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+
+import Navbar from "./navbar";
 
 export function SiteHeader() {
   return (
@@ -12,28 +12,7 @@ export function SiteHeader() {
               EK Kadam
             </span>
           </Link>
-          <nav className="hidden md:flex items-center space-x-6">
-            {["Home", "Projects", "Apply Proposal", "Success Stories", "Testimonials", "Contact"].map((item) => (
-              <Link
-                key={item}
-                href={item === "Home" ? "/" : `/${item.toLowerCase().replace(/\s+/g, '-')}`}
-                className="text-sm font-medium text-gray-700 hover:text-green-600 transition-colors"
-              >
-                {item}
-              </Link>
-            ))}
-          </nav>
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" className="hidden md:inline-flex hover:bg-green-100 hover:text-green-600">
-              Sign In
-            </Button>
-            <Button className="bg-gradient-to-r from-green-600 to-indigo-600 text-white hover:from-green-700 hover:to-indigo-700 transition-all duration-300">
-              Join
-            </Button>
-            <Button variant="ghost" className="md:hidden" aria-label="Menu">
-              <Menu className="h-6 w-6" />
-            </Button>
-          </div>
+          <Navbar />
         </div>
       </div>
     </header>
