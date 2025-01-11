@@ -11,14 +11,21 @@ import {
 } from "@/components/ui/popover";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Separator } from "@/components/ui/separator";
+import { categories } from "@/lib/home";
+import { useEffect, useState } from "react";
 
-const categories = [
-  { id: "education", label: "Education" },
-  { id: "health", label: "Health" },
-  { id: "environment", label: "Environment" },
-  { id: "community", label: "Community" },
-  { id: "technology", label: "Technology" },
-];
+// const categories = [
+//   { id: "education", label: "Education" },
+//   { id: "health", label: "Health" },
+//   { id: "environment", label: "Environment" },
+//   { id: "community", label: "Community" },
+//   { id: "technology", label: "Technology" },
+// ];
+
+const customCategories = async () => {
+  const response = await categories();
+  return response.data;
+};
 
 const statuses = [
   { id: "active", label: "Active" },
@@ -48,6 +55,17 @@ export function ProjectFilters({
     setSelectedStatuses([]);
     setSelectedDate(undefined);
   };
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const data = await customCategories();
+      setCategories(data);
+    };
+
+    fetchCategories();
+  }, []);
 
   return (
     <Card className="h-fit p-6">
@@ -86,7 +104,7 @@ export function ProjectFilters({
                 htmlFor={category.id}
                 className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                {category.label}
+                {category.name}
               </label>
             </div>
           ))}

@@ -11,25 +11,27 @@ import { Progress } from "@/components/ui/progress";
 interface ProjectCardProps {
   id: string;
   title: string;
-  description: string;
-  image: string;
+  excerpt: string;
+  thumbnail: string;
   category: string;
   status: string;
   raised: number;
   goal: number;
-  createdAt: string;
+  created_at: string;
 }
 
 export function ProjectCard({
   title,
-  description,
-  image,
+  excerpt,
+  thumbnail,
   category,
   status,
   raised,
   goal,
 }: ProjectCardProps) {
   const progress = (raised / goal) * 100;
+
+  const image = process.env.NEXT_PUBLIC_API_URL + "/storage/" + thumbnail;
 
   return (
     <Card className="overflow-hidden">
@@ -61,7 +63,7 @@ export function ProjectCard({
         </div>
         <h3 className="text-lg font-semibold">{title}</h3>
         <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
-          {description}
+          {excerpt}
         </p>
       </CardContent>
       <CardFooter className="p-4 pt-0">

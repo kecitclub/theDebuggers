@@ -8,53 +8,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ProjectCard } from "./project-card";
+import api from "@/lib/axios";
+import { useEffect, useState } from "react";
 
 const sortOptions = [
   { value: "newest", label: "Newest First" },
   { value: "oldest", label: "Oldest First" },
   { value: "raised-high", label: "Most Raised" },
   { value: "raised-low", label: "Least Raised" },
-];
-
-// Mock project data
-const projects = [
-  {
-    id: "1",
-    title: "Local School Renovation",
-    description:
-      "Help us renovate the local elementary school to provide better education facilities for our children.",
-    image: "/placeholder.svg?height=400&width=600",
-    category: "education",
-    status: "active",
-    raised: 25000,
-    goal: 50000,
-    createdAt: "2024-01-01",
-  },
-  {
-    id: "2",
-    title: "Community Garden Initiative",
-    description:
-      "Creating a sustainable community garden to promote healthy eating and environmental awareness.",
-    image: "/placeholder.svg?height=400&width=600",
-    category: "environment",
-    status: "funding",
-    raised: 15000,
-    goal: 30000,
-    createdAt: "2024-01-05",
-  },
-  {
-    id: "3",
-    title: "Healthcare for All",
-    description:
-      "Supporting accessible healthcare services for underprivileged communities.",
-    image: "/placeholder.svg?height=400&width=600",
-    category: "health",
-    status: "completed",
-    raised: 100000,
-    goal: 100000,
-    createdAt: "2023-12-15",
-  },
-  // Add more projects as needed
 ];
 
 interface ProjectGridProps {
@@ -72,10 +33,20 @@ export function ProjectGrid({
   sortBy,
   setSortBy,
 }: ProjectGridProps) {
+  // const projects = await fetchProjects();
+  const [projects, setProjects] = useState([]);
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const response = await api.get("/proposals");
+      setProjects(response.data.data);
+    };
+    fetchProjects();
+  }, []);
+
   const filteredProjects = projects.filter((project) => {
     if (
       selectedCategories.length > 0 &&
-      !selectedCategories.includes(project.category)
+      !selectedCategories.includes(project.category_id)
     ) {
       return false;
     }
@@ -86,7 +57,7 @@ export function ProjectGrid({
       return false;
     }
     if (selectedDate) {
-      const projectDate = new Date(project.createdAt);
+      const projectDate = new Date(project.created_at);
       if (projectDate.toDateString() !== selectedDate.toDateString()) {
         return false;
       }
@@ -98,7 +69,7 @@ export function ProjectGrid({
     switch (sortBy) {
       case "oldest":
         return (
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
         );
       case "raised-high":
         return b.raised - a.raised;
@@ -106,7 +77,7 @@ export function ProjectGrid({
         return a.raised - b.raised;
       default: // "newest"
         return (
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         );
     }
   });
