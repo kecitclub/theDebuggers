@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Proposal;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ProposalDocument;
 use App\Models\ProposalTimeline;
@@ -15,6 +16,7 @@ class ProposalController extends Controller
         $validatedData = $request->validate([
             'user_id' => 'required|exists:users,id',
             'category_id' => 'required|exists:categories,id',
+            'title' => 'required|string',
             'description' => 'required|string',
             'thumbnail' => 'required|file',
             'excerpt' => 'required|string',
@@ -39,6 +41,9 @@ class ProposalController extends Controller
         // Create the proposal
         $proposal = Proposal::create([
             'user_id' => $validatedData['user_id'],
+            'category_id' => $validatedData['category_id'],
+            'title' => $validatedData['title'],
+            'slug' => Str::slug($validatedData['title']),
             'description' => $validatedData['description'],
             'thumbnail' => $validatedData['thumbnail']->store('proposal_thumbnails'),
             'excerpt' => $validatedData['excerpt'],

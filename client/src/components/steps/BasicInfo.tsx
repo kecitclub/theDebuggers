@@ -123,6 +123,19 @@ const BasicInfo: React.FC<MyEditorProps> = ({ placeholder }) => {
 
   return (
     <div className="space-y-6">
+      <div className="space-y-2">
+        <Label htmlFor="title">Title</Label>
+        <Input
+          id="title"
+          placeholder="Project title"
+          {...register("title", {
+            required: "Target community is required",
+          })}
+        />
+        {errors.target_community && (
+          <p className="text-red-500 text-sm">{errors.title.message}</p>
+        )}
+      </div>
       {/* Project Description */}
       <div className="space-y-2">
         <Label htmlFor="description">Project Description</Label>

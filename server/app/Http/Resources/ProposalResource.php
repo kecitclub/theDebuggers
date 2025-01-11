@@ -19,6 +19,9 @@ class ProposalResource extends JsonResource
             'title' => $this->title,
             'category' => $this->category->name,
             'category_id' => $this->category_id,
+            'location' => $this->location,
+            'target_community' => $this->target_community,
+            'expected_impact' => $this->expected_impact,
             'slug' => $this->slug,
             'excerpt' => $this->excerpt,
             'thumbnail' => $this->thumbnail,
@@ -26,6 +29,10 @@ class ProposalResource extends JsonResource
             'goal' => $this->timelines->sum('amount'),
             'status' => $this->status,
             'created_at' => $this->created_at,
+            'organization_name' => $this->user->name,
+            'estimated_start_date' => $this->estimated_start_date,
+            'expected_completion_date' => $this->expected_completion_date,
+            'timelines' => ProposalTimelineResource::collection($this->timelines),
         ];
     }
 }
