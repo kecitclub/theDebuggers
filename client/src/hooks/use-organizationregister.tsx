@@ -5,8 +5,9 @@ import { register } from "@/lib/auth";
 export default function useOrgRegister() {
   const router = useRouter();
 
-  const [stamp,setstamp]=useState();
-  const [pancard,setpancard]=useState();
+  const [stamp, setstamp] = useState();
+  const [pancard, setpancard] = useState();
+  const [loading, setloading] = useState(false);
   const [formData, setformData] = useState({
     name: "",
     email: "",
@@ -19,10 +20,10 @@ export default function useOrgRegister() {
     address: "",
     chairman: "",
 
-    established_date: ""
+    established_date: "",
   });
 
-  const {  password, password_confirmation } = formData;
+  const { password, password_confirmation } = formData;
 
   function isValidPassword(password: any) {
     if (password.length < 8) {
@@ -52,25 +53,23 @@ export default function useOrgRegister() {
   };
 
   const handleStampFileChange = (e) => {
-    if(e.target.files && e.target.files.length>0){
-        setstamp(e.target.files[0]);
-
-    }else{
-        alert("Please select a file");
+    if (e.target.files && e.target.files.length > 0) {
+      setstamp(e.target.files[0]);
+    } else {
+      alert("Please select a file");
     }
-  }
+  };
   const handlePanFileChange = (e) => {
-    if(e.target.files && e.target.files.length>0){
-        setpancard(e.target.files[0]);
-
-    }else{
-        alert("Please select a file");
+    if (e.target.files && e.target.files.length > 0) {
+      setpancard(e.target.files[0]);
+    } else {
+      alert("Please select a file");
     }
-  }
+  };
 
   const onSumit = async (event: FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
-
+    setloading(true);
     if (password != password_confirmation) {
       toast.error("Password and re_Password does not match");
     } else if (!isValidPassword(password)) {
@@ -78,31 +77,36 @@ export default function useOrgRegister() {
         "Password must contain Uppercase, lowercase,number and special character"
       );
     } else {
-        try {
-            const updatedData = new FormData();
-            updatedData.append("name", formData.name);
-            updatedData.append("email", formData.email);
-            updatedData.append("password", formData.password);
-            updatedData.append("password_confirmation", formData.password_confirmation);
-            updatedData.append("role", formData.role);
-            updatedData.append("province_id", formData.province_id);
-            updatedData.append("district_id", formData.district_id);
-            updatedData.append("municipality_id", formData.municipality_id);
-            updatedData.append("address", formData.address);
-            updatedData.append("chairman", formData.chairman);
-            updatedData.append("established_date", formData.established_date);
-            updatedData.append("stamp", stamp);
-            updatedData.append("pan_card", pancard);
+      try {
+        const updatedData = new FormData();
+        updatedData.append("name", formData.name);
+        updatedData.append("email", formData.email);
+        updatedData.append("password", formData.password);
+        updatedData.append(
+          "password_confirmation",
+          formData.password_confirmation
+        );
+        updatedData.append("role", formData.role);
+        updatedData.append("province_id", formData.province_id);
+        updatedData.append("district_id", formData.district_id);
+        updatedData.append("municipality_id", formData.municipality_id);
+        updatedData.append("address", formData.address);
+        updatedData.append("chairman", formData.chairman);
+        updatedData.append("established_date", formData.established_date);
+        updatedData.append("stamp", stamp);
+        updatedData.append("pan_card", pancard);
 
-            // const updatedData = { ...formData, stamp, pan_card: pancard};
-            console.log(updatedData);
+        // const updatedData = { ...formData, stamp, pan_card: pancard};
+        console.log(updatedData);
         const data = await register(updatedData);
         localStorage.setItem("token", data.access_token);
         localStorage.setItem("role", data.role);
         toast.success("Login successful");
-        router.replace(`/dashboard/${data.role}/`);
+        router.replace(`/dashboard/${data.role?data.role:'user'}`);
+        setloading(false);
       } catch (error: any) {
         toast.error(error?.response?.data?.message || "An error occurred");
+        setloading(false);
       }
     }
   };
@@ -114,7 +118,8 @@ export default function useOrgRegister() {
     handlePanFileChange,
     handleStampFileChange,
     stamp,
-    pancard
+    pancard,
+    loading,
     // isLoading,
     // lodingstate,
   };

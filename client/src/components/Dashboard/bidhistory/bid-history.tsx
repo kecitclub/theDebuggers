@@ -26,7 +26,7 @@ const initialBids: HistoricalBid[] = [
     goalAmount: 50000,
     status: 'Successful',
     completionDate: '2024-12-15',
-    imageUrl: '/placeholder.svg?height=200&width=400',
+    imageUrl: 'https://images.unsplash.com/photo-1425342605259-25d80e320565?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     id: '2',
@@ -36,7 +36,7 @@ const initialBids: HistoricalBid[] = [
     goalAmount: 100000,
     status: 'Partially Funded',
     completionDate: '2024-11-30',
-    imageUrl: '/placeholder.svg?height=200&width=400',
+    imageUrl: 'https://images.unsplash.com/photo-1425342605259-25d80e320565?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     id: '3',
@@ -46,7 +46,7 @@ const initialBids: HistoricalBid[] = [
     goalAmount: 40000,
     status: 'Successful',
     completionDate: '2024-10-20',
-    imageUrl: '/placeholder.svg?height=200&width=400',
+    imageUrl: 'https://images.unsplash.com/photo-1425342605259-25d80e320565?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     id: '4',
@@ -56,7 +56,7 @@ const initialBids: HistoricalBid[] = [
     goalAmount: 25000,
     status: 'Partially Funded',
     completionDate: '2024-09-05',
-    imageUrl: '/placeholder.svg?height=200&width=400',
+    imageUrl: 'https://images.unsplash.com/photo-1425342605259-25d80e320565?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     id: '5',
@@ -66,7 +66,7 @@ const initialBids: HistoricalBid[] = [
     goalAmount: 60000,
     status: 'Unsuccessful',
     completionDate: '2024-08-15',
-    imageUrl: '/placeholder.svg?height=200&width=400',
+    imageUrl: 'https://images.unsplash.com/photo-1425342605259-25d80e320565?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
 ]
 

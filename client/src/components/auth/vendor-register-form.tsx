@@ -105,6 +105,7 @@ export default function VendorRegisterForm({
     handleStampFileChange,
     pancard,
     stamp,
+    loading,
     formData,
   } = useOrgRegister();
 
@@ -239,7 +240,7 @@ export default function VendorRegisterForm({
           />
 
           <Button type="submit" className="w-full">
-            Register
+            {loading ? "loading..." : "Register"}
           </Button>
         </div>
 

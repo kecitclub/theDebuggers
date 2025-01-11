@@ -23,17 +23,23 @@ export default function LoginForm({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setloading] = useState(false);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setloading(true);
+
     try {
       const data = await login({ email, password });
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.role);
       toast.success("Login successful");
-      router.replace(`/dashboard/${data.role}/`);
+      router.replace(`/dashboard/${data.role?data.role:'user'}/`);
+      setloading(false);
     } catch (err: any) {
       setError(err?.response?.data?.message || "An error occurred");
+      toast.error(err?.response?.data?.message || "An error");
+      setloading(false);
     }
   };
 
@@ -78,11 +84,8 @@ export default function LoginForm({
                 />
               </div>
               <Button type="submit" className="w-full">
-                Login
+                {loading ? "loading..." : "Login"}
               </Button>
-              {/* <Button variant="outline" className="w-full">
-                Login with Google
-              </Button> */}
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}

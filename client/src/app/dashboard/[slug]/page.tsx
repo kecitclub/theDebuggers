@@ -1,3 +1,4 @@
+'use client'
 import {
   ArrowDown,
   ArrowUp,
@@ -8,6 +9,9 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import StackBars from "@/components/Dashboard/chats/bar";
+import PieArcLabel from "@/components/Dashboard/chats/piarclevel";
+import AnimatedValue from "@/components/AnimatedText";
 
 export default function page() {
   return (
@@ -18,17 +22,14 @@ export default function page() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <p className="text-sm text-muted-foreground">Clients</p>
-                  <p className="text-2xl font-bold">512</p>
+                  <p className="text-sm text-muted-foreground">Projects</p>
+                  <p className="text-2xl font-bold"><AnimatedValue value={12}/></p>
                 </div>
                 <div className="h-10 w-10 bg-emerald-500/10 rounded-full flex items-center justify-center">
                   <Users className="h-5 w-5 text-emerald-500" />
                 </div>
               </div>
-              <div className="flex items-center mt-4 text-sm text-emerald-500">
-                <ArrowUp className="h-4 w-4 mr-1" />
-                <span>+1%</span>
-              </div>
+             
             </CardContent>
           </Card>
 
@@ -36,17 +37,14 @@ export default function page() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <p className="text-sm text-muted-foreground">Sales</p>
-                  <p className="text-2xl font-bold">$7,770</p>
+                  <p className="text-sm text-muted-foreground">Donation</p>
+                  <p className="text-2xl font-bold">${<AnimatedValue value={7799}/>}</p>
                 </div>
                 <div className="h-10 w-10 bg-red-500/10 rounded-full flex items-center justify-center">
                   <ShoppingCart className="h-5 w-5 text-red-500" />
                 </div>
               </div>
-              <div className="flex items-center mt-4 text-sm text-red-500">
-                <ArrowDown className="h-4 w-4 mr-1" />
-                <span>-2%</span>
-              </div>
+              
             </CardContent>
           </Card>
 
@@ -54,21 +52,27 @@ export default function page() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
-                  <p className="text-sm text-muted-foreground">Performance</p>
-                  <p className="text-2xl font-bold">256%</p>
+                  <p className="text-sm text-muted-foreground">Engagement</p>
+                  <p className="text-2xl font-bold"><AnimatedValue value={256}/>%</p>
                 </div>
                 <div className="h-10 w-10 bg-yellow-500/10 rounded-full flex items-center justify-center">
                   <TrendingUp className="h-5 w-5 text-yellow-500" />
                 </div>
               </div>
-              <div className="flex items-center mt-4 text-sm text-yellow-500">
+              {/* <div className="flex items-center mt-4 text-sm text-yellow-500">
                 <TrendingUp className="h-4 w-4 mr-1" />
                 <span>+10%</span>
-              </div>
+              </div> */}
             </CardContent>
           </Card>
         </div>
-
+        <div className="flex items-center pr-4 gap-3">
+          <StackBars />
+          <div className="bg-white flex place-content-center h-full  rounded-lg shadow-xl">
+            <PieArcLabel />
+          </div>
+        </div>
+        <h1 className="text-3xl font-bold ">Donations</h1>
         <div className="space-y-4">
           {transactions.map((transaction, index) => (
             <Card key={index}>
@@ -97,7 +101,7 @@ export default function page() {
                         </p>
                       </div>
                     </div>
-                    <Badge>{transaction.percentage}%</Badge>
+                    {/* <Badge>{transaction.percentage}%</Badge> */}
                   </div>
                 </div>
               </CardContent>
@@ -111,12 +115,11 @@ export default function page() {
 
 const transactions = [
   {
-    amount: "375.53",
+    amount: "100.53",
     date: "3 days ago",
     via: "Turcotte",
     user: "Howell Hand",
-    userInfo: "May 4, 2023 @ jump64",
-    percentage: 70,
+    userInfo: "May 4, 2024",
     status: "completed",
   },
   {
@@ -124,7 +127,7 @@ const transactions = [
     date: "3 days ago",
     via: "Murazik - Graham",
     user: "Hope Howe",
-    userInfo: "Dec 3, 2023 @ juice.conception",
+    userInfo: "Dec 3, 2023 ",
     percentage: 68,
     status: "completed",
   },
@@ -133,7 +136,7 @@ const transactions = [
     date: "5 days ago",
     via: "Fahey - Kessler",
     user: "Nelson Jerde",
-    userInfo: "May 16, 2023 @ general.kessler",
+    userInfo: "May 16, 2024",
     percentage: 30,
     status: "destructive",
   },
@@ -142,7 +145,7 @@ const transactions = [
     date: "7 days ago",
     via: "Collier - Huel",
     user: "Kim Weimann",
-    userInfo: "May 4, 2023 @ psychotic.davidson",
+    userInfo: "May 4, 2023 ",
     percentage: 15,
     status: "destructive",
   },
