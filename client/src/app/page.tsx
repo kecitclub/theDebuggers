@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { trandingProposals } from "@/lib/home";
 import { useEffect, useState } from "react";
+import { InfoSection } from "@/components/InfoSection";
 
 const getTrandingPorposals = async () => {
   const response = await trandingProposals();
@@ -26,6 +27,7 @@ export default function Home() {
       <SiteHeader />
       <main className="">
         <HeroSection />
+        <InfoSection />
         <section className=" md:px-6 py-12 max-w-7xl mx-auto px-2">
           <h2 className="text-2xl font-bold mb-8 text-center">
             Trending Projects
@@ -36,6 +38,7 @@ export default function Home() {
             ))}
           </div>
         </section>
+
         {/* <CategoriesSection /> */}
         <TestimonialSection />
       </main>
