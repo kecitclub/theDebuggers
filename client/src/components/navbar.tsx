@@ -10,7 +10,7 @@ const Navbar = () => {
 
   useEffect(() => {
     // Check for token and role in local storage
-    const token = localStorage.getItem("access_token");
+    const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
     if (token && role === "organization") {
